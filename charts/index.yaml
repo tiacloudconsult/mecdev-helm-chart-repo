@@ -1,14 +1,36 @@
 apiVersion: v1
 entries:
+  api-service:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-08-11T10:13:48.03182Z"
+    description: A Helm chart for Kubernetes
+    digest: 4317a85f469226d7a231083cbd91e7a8cb257a08ff752c212dd38d455e5246df
+    name: api-service
+    type: application
+    urls:
+    - api-service-0.1.0.tgz
+    version: 0.1.0
   consumer-service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-11T09:10:36.626074Z"
+    created: "2023-08-11T10:13:48.032203Z"
     description: A Helm chart for Kubernetes
-    digest: f11352b2f499d22c567856e1d7d2c48a5578f8eb42683d19c0d09323cad2e447
+    digest: cf065acd82bea8f810600e134139317521fca6a14b651516b37aae3a4d623385
     name: consumer-service
     type: application
     urls:
     - consumer-service-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-11T09:10:36.623409Z"
+  dashboard-service:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-08-11T10:13:48.032609Z"
+    description: A Helm chart for Kubernetes
+    digest: d1cbc8f133e484775771ec23a6d3ce7b07ca3d18a23e7ec5e3d5b72f24987a0a
+    name: dashboard-service
+    type: application
+    urls:
+    - dashboard-service-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-08-11T10:13:48.031272Z"
