@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: general-config
+  namespace: iot
+data:
+  RABBITMQ_HOST: "mm-rabbit-rabbitmq-0.mm-rabbit-rabbitmq-headless.rabbit.svc.cluster.local"
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_EXCHANGE: "iot_exchange"
+  RABBITMQ_ROUTING_KEY: "iot_routing_key"
+  RABBITMQ_QUEUE: "iot_queue"
+  RABBITMQ_USERNAME: "test"
+  RABBITMQ_PASSWORD: "test"
+
+  MONGODB_HOST: "mongodb.mongodb.svc.cluster.local"
+  MONGODB_PORT: "27017"
+  MONGODB_DATABASE: "central_db"
+  MONGODB_COLLECTION: "central_collection"
+  MONGODB_ALERT_COLLECTION: "alert_collection"
+  MONGODB_USERS_COLLECTION: "users_collection"
+  MONGODB_USERNAME: "admin"
+  MONGODB_PASSWORD: "admin"
+
+  SMTP_HOST: "smtp.gmail.com"
+  SMTP_PORT: "587"
+  EMAIL_FROM: "sharhanalhassan@gmail.com"
+---
