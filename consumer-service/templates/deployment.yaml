@@ -1,67 +1,94 @@
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: {{ include "consumer-service.fullname" . }}
+#  labels:
+#    {{- include "consumer-service.labels" . | nindent 4 }}
+#spec:
+#  {{- if not .Values.autoscaling.enabled }}
+#  replicas: {{ .Values.replicaCount }}
+#  {{- end }}
+#  selector:
+#    matchLabels:
+#      {{- include "consumer-service.selectorLabels" . | nindent 6 }}
+#  template:
+#    metadata:
+#      {{- with .Values.podAnnotations }}
+#      annotations:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      labels:
+#        {{- include "consumer-service.selectorLabels" . | nindent 8 }}
+#    spec:
+#      {{- with .Values.imagePullSecrets }}
+#      imagePullSecrets:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      serviceAccountName: {{ include "consumer-service.serviceAccountName" . }}
+#      securityContext:
+#        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+#      containers:
+#        - name: {{ .Chart.Name }}
+#          securityContext:
+#            {{- toYaml .Values.securityContext | nindent 12 }}
+#          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+#          imagePullPolicy: {{ .Values.image.pullPolicy }}
+#          envFrom:
+#            - configMapRef:
+#                name: general-config
+#            - secretRef:
+#                name: smtp-secrets
+#          restartPolicy: Always
+#          ports:
+#            - name: http
+#              containerPort: {{ .Values.service.port }}
+#              protocol: TCP
+##          livenessProbe:
+##            httpGet:
+##              path: /
+##              port: http
+##          readinessProbe:
+##            httpGet:
+##              path: /
+##              port: http
+#          resources:
+#            {{- toYaml .Values.resources | nindent 12 }}
+#      {{- with .Values.nodeSelector }}
+#      nodeSelector:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      {{- with .Values.affinity }}
+#      affinity:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      {{- with .Values.tolerations }}
+#      tolerations:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "consumer-service.fullname" . }}
-  labels:
-    {{- include "consumer-service.labels" . | nindent 4 }}
+  name: consumer-app
+  namespace: iot
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "consumer-service.selectorLabels" . | nindent 6 }}
+      app: consumer-app
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "consumer-service.selectorLabels" . | nindent 8 }}
+        app: consumer-app
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "consumer-service.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                name: general-config
-            - secretRef:
-                name: smtp-secrets
-          restartPolicy: Always
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
-#          readinessProbe:
-#            httpGet:
-#              path: /
-#              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      - name: consumer-app
+        image: sharhanalhassan/iotconsumer:0.0.12
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: general-config
+        - secretRef:
+            name: smtp-secrets
+      restartPolicy: Always
