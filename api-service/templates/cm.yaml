@@ -10,8 +10,8 @@ data:
   RABBITMQ_EXCHANGE: "iot_exchange"
   RABBITMQ_ROUTING_KEY: "iot_routing_key"
   RABBITMQ_QUEUE: "iot_queue"
-  RABBITMQ_USERNAME: "test"
-  RABBITMQ_PASSWORD: "test"
+  RABBITMQ_USERNAME: "admin"
+  RABBITMQ_PASSWORD: "admin"
 
   MONGODB_HOST: "mongodb.mongodb.svc.cluster.local"
   MONGODB_PORT: "27017"
